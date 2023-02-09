@@ -25,25 +25,45 @@ export default function App() {
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       {hinnat ? (
         hinnat.map(hinta => {
           const date = new Date(hinta.DateTime);
           const dateTime =
-            date.getFullYear() +
-            '-' +
-            (date.getMonth() + 1).toString().padStart(2, '0') +
-            '-' +
             date.getDate().toString().padStart(2, '0') +
+            '.' +
+            (date.getMonth() + 1).toString().padStart(2, '0') +
             ' ' +
             date.getHours().toString().padStart(2, '0') +
             ':' +
             date.getMinutes().toString().padStart(2, '0');
 
+          // Check if the date and time of the current item matches the current date and time of the device
+          const isCurrentTime =
+            date.getDate() === new Date().getDate() &&
+            date.getMonth() === new Date().getMonth() &&
+            date.getFullYear() === new Date().getFullYear() &&
+            date.getHours() === new Date().getHours();
+
           return (
-            <Text key={hinta.DateTime} style={styles.text}>
-              {dateTime}  {hinta.PriceWithTax}
-            </Text>
+            <View key={hinta.DateTime} style={styles.itemContainer}>
+              <Text
+                style={[
+                  styles.dateText,
+                  { fontWeight: isCurrentTime ? 'bold' : 'normal' },
+                ]}
+              >
+                {dateTime}
+              </Text>
+              <Text
+                style={[
+                  styles.priceText,
+                  { fontWeight: isCurrentTime ? 'bold' : 'normal' },
+                ]}
+              >
+                {hinta.PriceWithTax}
+              </Text>
+            </View>
           );
         })
       ) : (
@@ -59,8 +79,34 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  text: {
-    fontSize: 25,
+  contentContainer: {
+    paddingTop: 30,
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: 0,
   },
+  dateText: {
+    fontSize: 35,
+    flex: 1,
+    textAlign: 'center',
+  },
+  priceText: {
+    fontSize: 35,
+    flex: 1,
+    textAlign: 'center',
+  },
+  dateText: {
+    fontSize: 35,
+    flex: 1,
+    textAlign: 'center',
+  },
+  boldText: {
+    fontSize: 35,
+    flex: 1,
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
 });
+
