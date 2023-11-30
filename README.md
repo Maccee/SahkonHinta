@@ -1,3 +1,3 @@
 ## SahkonHinta React Nativella
 
-Näyttää sähkön hinnan.
+Kutsuu apia ja näyttää sähkön hinnan.
